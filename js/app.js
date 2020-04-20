@@ -6,54 +6,40 @@
 const api = new Api();
 let misAnimesId = [];
 let misAnimesObjetos = [];
+let html = "";
 
 //selectores
 const boton = document.getElementById("cargar");
-const listaAnime = document.getElementById('lista-anime')
+const listaAnime = document.getElementById("lista-anime");
 //event listeners
 eventListeners();
 
-
 function eventListeners() {
 	document.addEventListener("DOMContentLoaded", buscadorDeAnime);
-	boton.addEventListener("click", datosAnime);
+	// boton.addEventListener("click", datosAnime);
 }
 
 //funciones
-
 function buscadorDeAnime(e) {
-	listaNombre.forEach((anime) => {
+	listaNombre.forEach(async function (anime) {
 		//llamamos la funcion quenos devuelve el id del anime
-
-		api.conseguirId(anime)
-			.then((anime) => {
-				const animeId = anime.results[0].mal_id;
-				misAnimesId.push(animeId);
-
-				//llamamos la funcion para obtener el resto de la informacion
-				setTimeout(()=>{
-					console.log('esperanding')
-					api.infoAnime(animeId)
-						.then(function (anime) {
-							misAnimesObjetos.push(anime);
-						})
-						.catch((error) => {
-							console.log("error desde infoAnime");
-						});
-
-				}),30000
-			})
-			.catch((error) => console.log("error conseguir id"));
+		//funcion a crear
+		const resultBusqueda = await api.conseguirId(anime);
+		let animeId = resultBusqueda.results[0].mal_id;
+		// misAnimesId.push(animeId);
+		setTimeout(async () => {
+			const objetoAnime = await api.infoAnime(animeId);
+			// misAnimesObjetos.push(objetoAnime);
+			html += `<li>${objetoAnime.title}</li>`;
+			listaAnime.innerHTML = html;
+		}, 2000);
 	});
-	console.log(misAnimesId);
 }
 
-function datosAnime() {
-	let html = ''
-	misAnimesObjetos.forEach(anime=>{
-		html += `<li>${anime.title}</li>`
-	})
-	listaAnime.innerHTML= html
-
-
-}
+// function datosAnime() {
+// 	let html = "";
+// 	misAnimesObjetos.forEach((anime) => {
+// 		html += `<li>${anime.title}</li>`;
+// 	});
+// 	listaAnime.innerHTML = html;
+// }

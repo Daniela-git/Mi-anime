@@ -7,6 +7,7 @@ class Api{
     
         //pasando la respuesta a json
         let datosAnime = await respuesta.json();
+        console.log('id')
         return datosAnime;
         //usando los datos de la api
     }
@@ -16,6 +17,7 @@ class Api{
         
         //pasando la respuesta a json
         let datosAnime = await respuesta.json();
+        console.log('info')
         return datosAnime;
     }
     async listaEpisodios(animeId){
