@@ -2,6 +2,7 @@
 //se podría sacar los id de los animes y guardarlos en un arreglo y así se ahorra el usa de una función y se consigue mejorar el tiempo de carga, y esa función pasaría a ser usada solamente cuando se agregue un nuevo anime, y se podrían hasta guardar en el local storage, pero de momento dejemolo en una lista
 
 //variables
+const Api = require('./api.js')
 
 const api = new Api();
 let misAnimesId = [];
@@ -55,7 +56,7 @@ async function datosAnime() {
 			}catch(err){
 				console.log(err)
 			}
-		}, 2000);
+		}, 4000);
 		// console.log(li)
 	});
 }

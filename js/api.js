@@ -26,3 +26,5 @@ class Api {
 		return datosAnime;
 	}
 }
+
+module.exports = Api
