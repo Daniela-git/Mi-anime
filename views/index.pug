@@ -1,0 +1,21 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Mis animes
+    link(rel='stylesheet', href='/css/style.css')
+    link(href='https://fonts.googleapis.com/css2?family=Poppins&display=swap', rel='stylesheet')
+  body
+    h1 MIS ANIMES
+    button#boton soy un boton dame click
+    button#boton2 soy un boton dame click 2
+    ul#lista-anime.animes
+      each val, index in list
+        div(class='elemento-anime' id='anime'+index)
+          li  #{val}
+
+
+    script(src='js/api.js')
+    script(src='js/ui.js')
+    script(src='js/index.js')

@@ -868,3 +868,29 @@ let listaNombre = [
 	"Hoshiai no Sora",
 	"Araburu Kisetsu no Otome-domo yo",
 ];
+
+
+const fs = require("fs");
+
+function read(){
+    const data = fs.readFileSync("./prueba.txt")
+    const lista = JSON.parse(data);
+    // console.log(lista)
+    return lista;
+    // console.log(object)
+}
+
+function write(newObject) {
+    //agregamos el nuevo dato
+    let objectList = read()
+	objectList.push(newObject);
+	const textObject = JSON.stringify(objectList);
+	fs.writeFileSync("./prueba.txt", textObject);
+
+}
+
+
+for (let i = 0; i < 285; i++) {
+	write({"title":`${listaNombre[i]}`,"watched":`${listaVisto[i]}`,"images":"","episodes":0,"genre":"","orden":`${listaNumeroVisto[i]}`})
+	
+}

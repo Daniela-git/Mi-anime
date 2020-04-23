@@ -1,8 +1,8 @@
 class Api {
 	async conseguirId(anime) {
 		const link = `https://api.jikan.moe/v3/search/anime?q=${anime}&limit=1`;
-
 		//esperando la respuesta
+		
 		let respuesta = await fetch(link);
 
 		//pasando la respuesta a json
@@ -26,5 +26,3 @@ class Api {
 		return datosAnime;
 	}
 }
-
-module.exports = Api
