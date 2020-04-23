@@ -1,4 +1,4 @@
-class Api {
+export class Api {
 	async conseguirId(anime) {
 		const link = `https://api.jikan.moe/v3/search/anime?q=${anime}&limit=1`;
 		//esperando la respuesta

@@ -23,25 +23,28 @@ h1 {
     color: #2d3436;
 }
 
-.elemento-anime {
-	display: inline-flex;
-	margin: 10px;
-	padding: 10px;
-	border: 2px solid #dfe6e9;
-    border-radius: 4px;
-    /* position: ; */
-}
 .elemento-anime img {
-    display: block;
+    display: flex;
     /* text-decoration: none; */
-    /* position: relative; */
+    position: relative;
     size: 20px;
     width: 100px;
     height: 150px;
     
 }
 .elemento-anime li {
-	display: flex;
+    display: flex;
+    text-overflow: ellipsis;
 	text-decoration: none;
-	position: relative;
+	/* position: relative; */
+}
+
+.elemento-anime {
+    display: inline-flex;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #dfe6e9;
+    border-radius: 4px;
+    /* position: ; */
+
 }

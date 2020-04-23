@@ -1,9 +1,17 @@
 //IDEAS
 //ya que se sabe como guardar la info en txt , buscar una vez y agregar a los animes con los nombres correcto al txt y tambien con el resto de la información faltante así podemos crear una tabla y filtrar
 
+//modulos
+import * as animeApi from "/js/api.js";
+
+//fate/zero 10087
+//tokyo ghoul 27899
+
 //variables
 
-const api = new Api();
+const api = new animeApi.Api();
+let setAnimes = new Set();
+let setNombres = [];
 let misAnimesId = [];
 let misAnimesObjetos = [];
 let html = "";
@@ -12,17 +20,20 @@ let html = "";
 const boton = document.querySelector("#boton");
 const listaAnime = document.getElementById("lista-anime");
 const boton2 = document.querySelector("#boton2");
+
 //event listeners
 eventListeners();
 
 function eventListeners() {
-	boton2.addEventListener("click", searchId);
+	// boton2.addEventListener("click", searchId);
 	// document.addEventListener("DOMContentLoaded", prueba);
-	boton.addEventListener("click", searchPictures);
+	// boton.addEventListener("click", searchPictures);
+	boton.addEventListener("click", setImages);
 }
 
 //funciones
 
+//leer los datos guardados en el txt de anime
 async function readTxt() {
 	const res = await fetch("public/anime.txt");
 	let animes = await res.text();
@@ -31,17 +42,18 @@ async function readTxt() {
 	return animes;
 }
 
-async function searchId(e) {
+//en caso de que se necesite usar la api con un for
+async function forSearchId(e) {
 	e.preventDefault();
 	const animesList = await readTxt();
 	// }
-
+	let time = 0;
 	for (let i = 0; i < animesList.length; i++) {
-		setDelay(animesList[i]);
-		
+		time += 300;
+		setDelay(animesList[i], time);
 	}
 
-	function setDelay(anime){
+	function setDelay(anime, time) {
 		//llamamos la funcion quenos devuelve el id del anime
 		//funcion a crear
 		setTimeout(async () => {
@@ -51,49 +63,52 @@ async function searchId(e) {
 			//pasando la respuesta a json
 			let datosAnime = await respuesta.json();
 			let animeId = datosAnime.results[0].mal_id;
-			misAnimesId.push(animeId);
-			console.log(misAnimesId.length);
-		}, 4000);
-
-	};
-}
-
-function searchPictures(e) {
-	e.preventDefault();
-
-	for (let i = 0; i < misAnimesId.length; i++) {
-		setDelay(misAnimesId[i]);
-		
-	}
-	function setDelay(animeId) {
-		setTimeout(async function () {
-			const link = `https://api.jikan.moe/v3/anime/${animeId}/pictures`;
-			let respuesta = await fetch(link);
-			//pasando la respuesta a json
-			let datosAnime = await respuesta.json();
-			// const objetoAnime = await api.infoAnime(animeId);
-			misAnimesObjetos.push(datosAnime);
-		}, 8000);
-	}
-}
-
-async function datosAnime() {
-	// console.log(misAnimesObjetos.length)
-	misAnimesObjetos.forEach(async (anime, index) => {
-		setTimeout(async () => {
-			try {
-				let results = await api.listaImagenes(anime.mal_id);
-				let imagenes = results.pictures;
-				// console.log(imagenes);
-				let padre = document.querySelector(`#anime${index}`);
-				let img = document.createElement("img");
-				img.setAttribute("src", `${imagenes[0].small}`);
-				padre.appendChild(img);
-			} catch (err) {
-				console.log(err);
+			//comprobando que el id no este ya en la lista
+			let filter = misAnimesId.some((anime) => anime === animeId);
+			if (filter) {
+				setAnimes.add(animeId);
 			}
-		}, 4000);
-		// console.log(li)
+			setNombres.push(datosAnime.results[0].title);
+			misAnimesId.push(animeId);
+			misAnimesObjetos.push(datosAnime);
+			console.log(misAnimesId.length);
+		}, time);
+	}
+}
+
+//para buscar un solo anime por id
+async function searchId(anime) {
+	//se llama a la funcion de la api y retorn un objeto
+	const datosAnime = await api.conseguirId(anime.title);
+	let animeId = datosAnime.results[0].mal_id;
+	console.log(animeId);
+}
+
+function getLocalStorageId() {
+	let local;
+	// Revisamos los valoes de local storage
+	if (localStorage.getItem("animes") === null) {
+		local = [];
+	} else {
+		local = JSON.parse(localStorage.getItem("animes"));
+	}
+	return local;
+}
+
+async function setImages() {
+	// console.log(misAnimesObjetos.length)
+	let animes = await getLocalStorageId();
+	animes.forEach(async (anime, index) => {
+		try {
+			let urlImage = anime.results[0].image_url;
+			// console.log(imagenes);
+			let padre = document.querySelector(`#anime${index}`);
+			let img = document.createElement("img");
+			img.setAttribute("src", `${urlImage}`);
+			padre.appendChild(img);
+		} catch (err) {
+			console.log(err);
+		}
 	});
 }
 
