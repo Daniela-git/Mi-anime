@@ -4,8 +4,6 @@
 //modulos
 import * as animeApi from "/js/api.js";
 
-//fate/zero 10087
-//tokyo ghoul 27899
 
 //variables
 

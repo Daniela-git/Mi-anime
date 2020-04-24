@@ -19,6 +19,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 
+//indicando donde estan los archivos estaticos aka todo lo del front 
+app.use(express.static(path.join(__dirname, 'public')))
+
+
 app.get('/', async (req,res) =>{
     const objeto = documents.read()
     // console.log(objeto)
@@ -36,21 +40,21 @@ app.get('/', async (req,res) =>{
 // })
 
 //para que lea los archivos de javascript
-app.get('/js/index.js', async (req,res) =>{
-    res.sendFile(path.join(__dirname+'/js/index.js')); 
-})
-app.get('/js/api.js', async (req,res) =>{
-    res.sendFile(path.join(__dirname+'/js/api.js')); 
-})
-app.get('/js/ui.js', async (req,res) =>{
-    res.sendFile(path.join(__dirname+'/js/ui.js')); 
-})
-app.get('/css/style.css', async (req,res) =>{
-    res.sendFile(path.join(__dirname+'/css/style.css')); 
-})
-app.get('/public/anime.txt', async (req,res) =>{
-    res.sendFile(path.join(__dirname+'/public/anime.txt')); 
-})
+// app.get('/js/index.js', async (req,res) =>{
+//     res.sendFile(path.join(__dirname+'/js/index.js')); 
+// })
+// app.get('/js/api.js', async (req,res) =>{
+//     res.sendFile(path.join(__dirname+'/js/api.js')); 
+// })
+// app.get('/js/ui.js', async (req,res) =>{
+//     res.sendFile(path.join(__dirname+'/js/ui.js')); 
+// })
+// app.get('/css/style.css', async (req,res) =>{
+//     res.sendFile(path.join(__dirname+'/css/style.css')); 
+// })
+// app.get('/public/anime.txt', async (req,res) =>{
+//     res.sendFile(path.join(__dirname+'/public/anime.txt')); 
+// })
 
 
 //Para que el servidor empiece a escuchar en el puerto 3000

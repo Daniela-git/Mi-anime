@@ -10,10 +10,13 @@ html(lang='en')
     h1 MIS ANIMES
     button#boton soy un boton dame click
     button#boton2 soy un boton dame click 2
-    ul#lista-anime.animes
+
+    #lista-anime
       each val, index in list
-        div(class='elemento-anime' id='anime'+index)
-          li  #{val}
+          div(class='elemento-anime' id='anime'+index)
+            img
+            div.title
+              p.title #{val}
 
 
-    script(src='js/index.js' type='module')
+    script(src='/js/index.js' type='module')
